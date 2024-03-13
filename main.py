@@ -122,39 +122,39 @@ def pinguu():
         try:
             frame_lined = cv2.line(frame_lined, right_top, right_bottom, (128, 128, 128), 3)
         except cv2.error:
-            print("caca")
+            print("cv2.error")
             pass
         cv2.imshow("left", frame_lined)
-        #
-        #     # final visualization
-        #     blank_frame = np.zeros((height, width), dtype=np.uint8)
-        #     left_lined_frame = cv2.line(blank_frame, left_top, left_bottom, (255, 0, 0), 3)
-        #     stretched = cv2.getPerspectiveTransform(np.array([(width, 0), (0, 0), (0, height), (width, height)], dtype=np.float32), trapezoid)
-        #     left_streached_frame = cv2.warpPerspective(left_lined_frame, stretched, (width, height))
-        #     cv2.imshow("cacamaca", left_streached_frame)
-        #     right_lined_frame = cv2.line(blank_frame, right_top, right_bottom, (255, 0, 0), 3)
-        #     right_streached_frame = cv2.warpPerspective(right_lined_frame, stretched, (width, height))
-        #     cv2.imshow("cacamaca2", right_streached_frame)
-        #
-        #     edge_corected = np.array(right_streached_frame, copy=True)
-        #     half1 = np.array(edge_corected[0:height, 0:width // 2])  #
-        #     half2 = np.array(edge_corected[0:height, width // 2:width])  #
-        #     left_points = np.argwhere(half1 > 0)  #
-        #     right_points = np.argwhere(half2 > 0)  # selecting white point coordinates
-        #
-        #     # left_xs = np.array(left_points[:, 1])
-        #     # left_ys = np.array(left_points[:, 0])q
-        #     # right_xs = np.array([x + width // 2 for x in right_points[:, 1]])
-        #     # right_ys = np.array(right_points[:, 0])
-        #
-        #     frame_copy = frame_resized.copy()
-        #     for i in range(len(left_points)):
-        #         frame_copy[left_points[i][0], left_points[i][1]] = (50, 50, 250)
-        #     for i in range(len(right_points)):
-        #         frame_copy[right_points[i][0], right_points[i][1] + width//2] = (50, 250, 50)
-        #     frame_copy = cv2.resize(frame_copy, (width, height)) # (frame.shape[1], frame.shape[0]))
-        #     cv2.imshow("Finally", frame_copy)
-        #
+
+        # final visualization
+        blank_frame = np.zeros((height, width), dtype=np.uint8)
+        left_lined_frame = cv2.line(blank_frame, left_top, left_bottom, (255, 0, 0), 3)
+        stretched = cv2.getPerspectiveTransform(np.array([(width, 0), (0, 0), (0, height), (width, height)], dtype=np.float32), trapezoid)
+        left_streached_frame = cv2.warpPerspective(left_lined_frame, stretched, (width, height))
+        cv2.imshow("left streched frame", left_streached_frame)
+        right_lined_frame = cv2.line(blank_frame, right_top, right_bottom, (255, 0, 0), 3)
+        right_streached_frame = cv2.warpPerspective(right_lined_frame, stretched, (width, height))
+        cv2.imshow("right streched frame", right_streached_frame)
+
+        edge_corected = np.array(right_streached_frame, copy=True)
+        half1 = np.array(edge_corected[0:height, 0:width // 2])  #
+        half2 = np.array(edge_corected[0:height, width // 2:width])  #
+        left_points = np.argwhere(half1 > 0)  #
+        right_points = np.argwhere(half2 > 0)  # selecting white point coordinates
+
+        # left_xs = np.array(left_points[:, 1])
+        # left_ys = np.array(left_points[:, 0])q
+        # right_xs = np.array([x + width // 2 for x in right_points[:, 1]])
+        # right_ys = np.array(right_points[:, 0])
+
+        frame_copy = frame_resized.copy()
+        for i in range(len(left_points)):
+            frame_copy[left_points[i][0], left_points[i][1]] = (50, 50, 250)
+        for i in range(len(right_points)):
+            frame_copy[right_points[i][0], right_points[i][1] + width//2] = (50, 250, 50)
+        frame_copy = cv2.resize(frame_copy, (width, height)) # (frame.shape[1], frame.shape[0]))
+        cv2.imshow("Finally", frame_copy)
+
 
         # displaying results
         cv2.imshow('Gray', frame_gray)
